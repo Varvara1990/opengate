@@ -229,6 +229,21 @@ See figure below, right:
 Using ``source.direction_relative_to_attached_volume = True`` will make
 your source direction change following the rotation of that volume.
 
+-  ``direction.polarization = '[1, 0, 0]'`` assigns a polarization to primary particles (gamma).
+   The polarization is defined in the particle coordinate system with the
+   `Stokes parameters <https://en.wikipedia.org/wiki/Stokes_parameters>`_ [Q, U, V].
+   Do not forget to use an adequate physics list. You can define the polarization as follows:
+
+   .. code:: python
+
+      source.direction.polarization = [1, 0, 0] # linear polarization (horizontal)
+      source.direction.polarization = [-1, 0, 0] # linear polarization (vertical)
+      source.direction.polarization = [0, 1, 0] # linear polarization (45°)
+      source.direction.polarization = [0, -1, 0] # linear polarization (-45°)
+      source.direction.polarization = [0, 0, 1] # circular polarization (right)
+      source.direction.polarization = [0, 0, -1] # circular polarization (left)
+      source.direction.polarization = [0, 0, 0] # unpolarized
+      sim.physics_manager.physics_list_name = "FTFP_BERT_LIV"
 
 
 Acceptance Angle

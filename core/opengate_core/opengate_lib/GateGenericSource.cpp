@@ -88,8 +88,6 @@ void GateGenericSource::InitializeUserInfo(py::dict &user_info) {
   InitializeDirection(user_info);
   InitializeEnergy(user_info);
 
-  // FIXME todo polarization
-
   // init number of events
   fDirectionRelativeToAttachedVolume =
       DictGetBool(user_info, "direction_relative_to_attached_volume");
@@ -482,6 +480,14 @@ void GateGenericSource::InitializeDirection(py::dict puser_info) {
   ll.fAAManager = new GateAcceptanceAngleTesterManager;
   ll.fAAManager->Initialize(dd, is_valid_type);
   ll.fSPS->SetAAManager(ll.fAAManager);
+
+  // Set the polarization
+  auto polarization = DictGetVecDouble(user_info, "polarization");
+  if (polarization.size() == 3) {
+    auto polarisation_tree_vector =
+        G4ThreeVector(polarization[0], polarization[1], polarization[2]);
+    ll.fSPS->SetPolarization(polarisation_tree_vector);
+  }
 }
 
 void GateGenericSource::InitializeEnergy(py::dict puser_info) {
